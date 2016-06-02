@@ -1,0 +1,30 @@
+\documentclass[11pt]{scrartcl}
+\usepackage{dominatrix}
+\usepackage{solarized-light}
+\lstset{
+language=R
+}
+\title{PWAS Covariance Calculation Documentation}
+\subject{}
+\author{Linan Qiu\\\texttt{lq2137}}
+\begin{document}
+\maketitle
+
+\section{Objectives}
+
+\subsection{Pairwise Covariance}
+
+We want the covariance ($cov$) of diseases $x$ and $y$ for all diseases in the database. Furthermore, these covariances are split by sex $s$ and age ranges $a_l$ and $a_h$.
+
+Diseases $x$ and $y$ are specified using ICD codes. Sexes $s$ are either $female$ or $male$, and $a_l, a_h$ specify lower and upper bound ranges (ranging between 0 and 100). In other words, a query for the covariance of disease with ICD code 100 and ICD code 200 for females aged between 10 and 25 would be:
+
+\[cov(100, 200, female, 10, 25) = 0.25\]
+
+indicating a covariance of 0.25.
+
+\subsection{Covariance Matrices}
+
+We also want covariance matrices for all possible diseases 
+
+
+\end{document}
