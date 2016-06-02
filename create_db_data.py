@@ -25,31 +25,31 @@ logger.info("running %s" % ' '.join(sys.argv))
 #             outputs = parse_row(row)
 #             for output in outputs:
 #                 writer.writerow(output)
-#
-# with open('csv_data/patient_counts.csv', 'w') as f_out:
-#     count = 0
-#
-#     writer = csv.DictWriter(f_out, fieldnames=['AGE', 'N'])
-#     writer.writeheader()
-#
-#     # key = age, value = set of patient IDS
-#     age_patients = {}
-#     with open('csv_data/patients.csv', 'r') as f:
-#         reader = csv.DictReader(f)
-#         for line in reader:
-#             count += 1
-#             if count % 100000 == 0:
-#                 logger.info('counting line %d' % count)
-#             age = line['AGE']
-#             pid = line['PID']
-#             if age not in age_patients:
-#                 age_patients[age] = set()
-#             age_patients[age].add(pid)
-#
-#     patient_counts = [{'AGE': age, 'N': len(pids)} for age, pids in age_patients.items()]
-#     pickle.dump(patient_counts, open('patient_counts.pkl', 'wb'))
-#     for patient_count in sorted(patient_counts, key=lambda k: k['AGE']):
-#         writer.writerow(patient_count)
+
+with open('csv_data/patient_counts.csv', 'w') as f_out:
+    count = 0
+
+    writer = csv.DictWriter(f_out, fieldnames=['AGE', 'SEX', 'N'])
+    writer.writeheader()
+
+    # key = age, value = set of patient IDS
+    age_patients = {}
+    with open('csv_data/patients.csv', 'r') as f:
+        reader = csv.DictReader(f)
+        for line in reader:
+            count += 1
+            if count % 100000 == 0:
+                logger.info('counting line %d' % count)
+            age = int(line['AGE'])
+            sex = int(line['SEX'])
+            pid = line['PID']
+            if (age, sex) not in age_patients:
+                age_patients[(age, sex)] = set()
+            age_patients[(age, sex)].add(pid)
+
+    patient_counts = [{'AGE': age, 'SEX': sex, 'N': len(pids)} for (age, sex), pids in age_patients.items()]
+    for patient_count in sorted(patient_counts, key=lambda k: k['AGE']):
+        writer.writerow(patient_count)
 
 with open('csv_data/icds.csv', 'w') as f_out:
     count = 0
@@ -71,5 +71,5 @@ with open('csv_data/icds.csv', 'w') as f_out:
             icd_patients[icd].add(pid)
 
     patient_counts = [{'ICD': icd, 'N': len(pids)} for icd, pids in icd_patients.items()]
-    for patient_count in sorted(patient_counts, key=lambda k: k['AGE']):
+    for patient_count in sorted(patient_counts, key=lambda k: k['ICD']):
         writer.writerow(patient_count)
