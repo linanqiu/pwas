@@ -7,4 +7,4 @@ SELECT (SELECT COUNT(PID) FROM pid_x) AS kx, (SELECT COUNT(PID) from pid_y) as k
 
 SELECT SUM(N)
 FROM patient_counts
-WHERE AGE>=l AND AGE<h;
+WHERE SEX=sex AND AGE>=l AND AGE<h;
