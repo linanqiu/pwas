@@ -91,7 +91,7 @@ app.get('/api/pair_cov', function (req, res) {
         'SELECT' +
         '(SELECT COUNT(PID) FROM pid_x) AS kx,' +
         '(SELECT COUNT(PID) from pid_y) as ky,' +
-        '(SELECT COUNT(pid_x.PID) FROM pid_x, pid_y WHERE pid_x.PID=pid_y.PID) as kxy', [5243, 7080, 1, 10, 20], function (err, result) {
+        '(SELECT COUNT(pid_x.PID) FROM pid_x, pid_y WHERE pid_x.PID=pid_y.PID) as kxy', [req.query.x, req.query.y, req.query.s, req.query.l, req.query.h], function (err, result) {
           done();
           if (err) {
             console.error(err);
